@@ -1,0 +1,49 @@
+.phonebookContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.phonebookLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+}
+
+.phonebookInput {
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid black;
+  margin: 0;
+}
+
+.phonebookInput:hover,
+.phonebookInput:focus {
+  border: 1px solid lime;
+  outline: none;
+}
+
+.phonebookBtn {
+  padding: 8px;
+  border-radius: 20px;
+  width: 300px;
+  border: 1px solid black;
+  cursor: pointer;
+  outline: none;
+}
+
+.phonebookBtn:hover,
+.phonebookBtn:focus {
+  background-color: blanchedalmond;
+}
+
+.phonebookText {
+  text-transform: uppercase;
+}
+
+.phonebookTextError {
+  text-transform: uppercase;
+  color: red;
+}
