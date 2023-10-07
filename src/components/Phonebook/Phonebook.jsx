@@ -1,74 +1,66 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './Phonebook.module.css';
 
-export class Phonebook extends Component {
-  state = {
-    name: '',
-    number: '',
-    error: false,
-  };
+export const Phonebook = ({ handleAddContact }) => {
+  const [nameState, setNameState] = useState('');
+  const [numberState, setNumberState] = useState('');
+  const [errorState, setErrorState] = useState(false);
 
-  handleInputChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+  const handleNumberChange = event => {
+    setNumberState(event.target.value);
   };
-
-  handleSubmit = event => {
+  const handleNameChange = event => {
+    setNameState(event.target.value);
+  };
+  const handleSubmit = event => {
     event.preventDefault();
     const contactData = {
-      name: this.state.name,
-      number: Number.parseInt(this.state.number),
+      name: nameState,
+      number: Number.parseInt(numberState),
     };
     if (isNaN(contactData.number)) {
-      return this.setState({
-        error: 'Please write number',
-      });
+      return setErrorState('Please write number');
     }
-    this.props.handleAddContact(contactData);
-    this.setState({
-      name: '',
-      number: '',
-      error: false,
-    });
+    handleAddContact(contactData);
+    setNameState('');
+    setNumberState('');
+    setErrorState(false);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} className={css.phonebookContainer}>
-        <label className={css.phonebookLabel}>
-          <span className={css.phonebookText}>Name</span>
-          <input
-            className={css.phonebookInput}
-            onChange={this.handleInputChange}
-            value={this.state.name}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </label>
-        <label className={css.phonebookLabel}>
-          <span className={css.phonebookText}>Number</span>
-          {this.state.error && (
-            <span className={css.phonebookTextError}>{this.state.error}</span>
-          )}
-          <input
-            className={css.phonebookInput}
-            onChange={this.handleInputChange}
-            value={this.state.number}
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </label>
-        <button type="submit" className={css.phonebookBtn}>
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit} className={css.phonebookContainer}>
+      <label className={css.phonebookLabel}>
+        <span className={css.phonebookText}>Name</span>
+        <input
+          className={css.phonebookInput}
+          onChange={handleNameChange}
+          value={nameState}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+      </label>
+      <label className={css.phonebookLabel}>
+        <span className={css.phonebookText}>Number</span>
+        {errorState && (
+          <span className={css.phonebookTextError}>{errorState}</span>
+        )}
+        <input
+          className={css.phonebookInput}
+          onChange={handleNumberChange}
+          value={numberState}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        />
+      </label>
+      <button type="submit" className={css.phonebookBtn}>
+        Add contact
+      </button>
+    </form>
+  );
+};
