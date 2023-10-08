@@ -5,19 +5,15 @@ import { Title } from 'components/Title/Title';
 import { useEffect, useState } from 'react';
 
 export const App = () => {
-  const [contactsState, setContactsState] = useState([]);
+  const [contactsState, setContactsState] = useState(
+    JSON.parse(localStorage.getItem('contacts')) ?? []
+  );
   const [filterState, setFilterState] = useState('');
 
   useEffect(() => {
     const stringifyContacts = JSON.stringify(contactsState);
     localStorage.setItem('contacts', stringifyContacts);
   }, [contactsState]);
-
-  useEffect(() => {
-    const stringifiedContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(stringifiedContacts) ?? [];
-    setContactsState(parsedContacts);
-  }, []);
 
   const handleAddContact = contactData => {
     if (contactsState.some(contact => contact.name === contactData.name)) {
